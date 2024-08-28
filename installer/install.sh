@@ -10,20 +10,23 @@
 
 
 #######################SETTINGS OF VARIABLES#############################################################
-export u="sudo apt-get update "
-export i="sudo apt-get install -y "
-export g="sudo apt-get upgrade -y "
-export gr="sudo apt-get dist-upgrade -y "
-export ar="sudo apt-get autoremove -y "
 
+export i="sudo apt-get install -y "
 export gc="sudo git clone "
 
 
+sudo apt-get update 
+sudo apt-get upgrade -y 
+sudo apt-get dist-upgrade -y 
+sudo apt-get autoremove -y 
 
-$u 
-$g 
-$gr
-$ar 
+
+
+
+
+
+
+
 
 
 function build() {
