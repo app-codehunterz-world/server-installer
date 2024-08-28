@@ -11,7 +11,7 @@
 function procedure {
     while true;
     do
-        read -p "Database-Name > " DB_Name
+        read -p "Database-Name > " DB_NAME
         read -p "Database-User > " DB_USER
         read -p "User-Password > " DB_PASS
         
