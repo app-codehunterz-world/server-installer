@@ -46,6 +46,7 @@ function php() {
     $i php*mysql 
     $i php*json 
     $i php*opcache php*gd 
+    $i php*bcmath php*soap php*mysqlnd php*intl php*zip
     sudo systemctl enable php8.2-fpm --now
     sudo systemctl enable php-fpm --now
 }
