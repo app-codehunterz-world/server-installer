@@ -1,11 +1,13 @@
 
-.PHONY: all install_packages run_script
+install: install-dependencies run-script
+	@echo "Installation and execution complete."
 
-all: install_packages run_script
 
-install_packages:
-    sudo apt-get update
+install-dependencies:
+	@echo "Installing dependencies..."
+	sudo apt-get update
     sudo apt-get install -y dialog
 
-run_script:
-    ./install.sh
+run-script:
+	@echo "Running script..."
+	./install.sh

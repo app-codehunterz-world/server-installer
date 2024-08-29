@@ -85,7 +85,7 @@ function menu() {
         clear
         case $CHOICE in
             1)
-                echo -e "Console > Creating Database, User identified by Password!."
+                echo -e "Console > Creating Database & User identified by Password!."
                 procedure
             ;;
             2)

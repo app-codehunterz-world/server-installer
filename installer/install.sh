@@ -58,6 +58,13 @@ function mysql() {
     echo -e "Console > Installing MYSQL Client and Server!."
     $i mariadb-client mariadb-server
     sudo systemctl enable mariadb --now
+    
+}
+
+
+function setup_mysql() {
+    udo chmod a+x -R MYSQL/setup.sh
+    sudo ./MYSQL/setup.sh
 }
 
 
@@ -65,12 +72,14 @@ function mysql() {
 
 
 
-
-
-
-function phpBB3() {
+function phpbb3() {
 
 }
+
+function wordpress() {
+    
+}
+
 
 
 
@@ -81,11 +90,8 @@ function auto_install() {
     nginx;
     php;
     mysql;
-
-
-
-
 }
+
 
 
 function manual_install() {
@@ -153,7 +159,9 @@ do
     OPTIONS=(1 "Auto Install requirements"
              2 "Manual Install requirements"
              3 "Install phpBB3"
-             4 "Beenden")
+             4 "Install Wordpress"
+             5 "Setup MYSQL"
+             6 "Beenden")
 
     CHOICE=$(dialog --clear \
                     --backtitle "Linux Shell Script Tutorial" \
@@ -167,17 +175,25 @@ do
     case $CHOICE in
         1)
             echo -e "Console > Start installing necessary packages!."
-            main
+            auto_install
             ;;
         2)
-            echo -e "Console > Start installing phpBB3!."
-            main
+            echo -e "Console > Start manual install!."
+            manual_install
             ;;
         3) 
-            echo -e "Console > Start installing Wordpress!."
-            main
+            echo -e "Console > Start installing phpBB3!."
+            phpbb3
             ;;
-        4)
+        4) 
+            echo -e "Console > Start installing Wordpress!."
+            wordpress
+            ;;
+        5) 
+            echo -e "Console > Setup MYSQL!."
+            setup_mysql
+            ;;
+        6)
             echo -e "Console > Exiting application!"
             exit
             ;;
