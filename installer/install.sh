@@ -15,6 +15,8 @@ export i="sudo apt-get install -y "
 export gc="sudo git clone "
 
 
+
+echo -e "Console > Auto Updaing & Upgrading System Now!."
 sudo apt-get update 
 sudo apt-get upgrade -y 
 sudo apt-get dist-upgrade -y 
@@ -35,6 +37,8 @@ function build() {
     $i golang 
     $i clang gcc 
     $i libc6
+    $i  libffi-dev python-setuptools sqlite3 libssl-dev python-virtualenv libjpeg-dev libxslt1-dev
+
 }
 
 function nginx() {
@@ -73,23 +77,70 @@ function setup_mysql() {
 
 
 function phpbb3() {
+    echo -e "Console > Installing phpBB3- requirements now!"
+    php;
+    mysql;
+    build;
+    nginx;
 
+    echo -e "Console > Start Downloading phpBB3!."
+    mkdir -p /var/www/board
+    cd /var/www/board
+    wget https://downloads.phpbb.de/pakete/deutsch/3.3/3.3.12/phpBB-3.3.12-deutsch.zip
+    unzip https://downloads.phpbb.de/pakete/deutsch/3.3/3.3.12/phpBB-3.3.12-deutsch.zip
+    cd phpBB*
+    mv ./* ../
+    cd ..
+    rm -rf phpBB3
+    cd ..
+    chown www-data:www-data -hR /var/www/board
+    chmod 755 -R /var/www/board
+    
 }
 
 function wordpress() {
+    echo -e "Console > Installing wordpress now!."
+    mkdir -p /var/www/blog
+    
+
     
 }
 
 
-
+function ufw_firewall() {
+    echo -e "Console > Settingup Firewall!."
+    $i ufw 
+    sudo systemctl enable ufw
+    sudo ufw enable
+    sudo ufw allow 80
+    sudo ufw allow 80/tcp
+    sudo ufw allow 80/udp
+    sudo ufw allow 443
+    sudo ufw allow 443/tcp
+    sudo ufw allow 443/udp
+    sudo ufw allow "Nginx FULL"
+    sudo ufw allow "Nginx HTTP"
+    sudo ufw allow "Nginx HTTPS"
+    sudo ufw allow "SSH"
+    sudo ufw allow "OpenSSH"
+    sudo ufw allow 8008
+    sudo ufw allow 8008/tcp
+    sudo ufw allow 8008/udp
+    sudo ufw allow 8448
+    sudo ufw allow 8448/tcp
+    sudo ufw allow 8448/udp
+    sudo ufw reload
+    sudo systemctl enable ufw --now
+}
 
 
 function auto_install() {
-
+    echo -e "Console > Auto-Installing Software!."
     build;
     nginx;
     php;
     mysql;
+    ufw_firewall;
 }
 
 
@@ -107,7 +158,8 @@ function manual_install() {
              2 "Install WebServer"
              3 "Install PHP"
              4 "Install MYSQL"
-             5 "Beenden")
+             5 "Install UFW Firewall"
+             6 "Beenden")
 
     CHOICE=$(dialog --clear \
                     --backtitle "Linux Shell Script Tutorial" \
@@ -136,6 +188,10 @@ function manual_install() {
             mysql
             ;;
         5)
+            echo -e "Console > Exiting application!"
+            ufw_firewall
+            ;;
+        6)
             echo -e "Console > Exiting application!"
             exit
             ;;
